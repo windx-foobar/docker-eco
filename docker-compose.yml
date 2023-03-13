@@ -1,0 +1,68 @@
+# Версия docker-compose
+version: '3.8'
+# Список наших сервисов (контейнеров)
+services:
+  # mysql:
+  #   build: ./images/mysql
+  #   container_name: 'docker-eco_mysql'
+  #   restart: '${RESTART_CONTAINERS}'
+  #   volumes:
+  #     - ${MYSQL_DB_FOLDER}:/var/lib/mysql:rw
+  #   # задаем пароль для root пользователя
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+  postgres:
+    image: postgres:13.3
+    container_name: 'docker-eco_postgres'
+    restart: '${RESTART_CONTAINERS}'
+    volumes:
+      - ${POSTGRES_DB_FOLDER}:/var/lib/postgresql/data/pgdata:rw
+    ports:
+      - '${POSTGRES_PORT}:8080'
+    # задаем пароль для root пользователя
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: '${POSTGRES_ROOT_USER}'
+      POSTGRES_PASSWORD: '${POSTGRES_ROOT_PASSWORD}'
+      POSTGRES_DB: '${POSTGRES_DB}'
+  # mongo:
+  #   image: mongo:5.0.2
+  #   container_name: 'docker-eco_mongo'
+  #   restart: '${RESTART_CONTAINERS}'
+  #   volumes:
+  #     - ${MONGO_DB_FOLDER}:/data/db:rw
+  #   # задаем пароль для root пользователя
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+  #     MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+  # mongo_express:
+  #   image: mongo-express
+  #   container_name: 'docker-eco_mongo_express'
+  #   restart: '${RESTART_CONTAINERS}'
+  #   ports:
+  #     - '${MONGOEXPRESS_PORT}:8081'
+  #   links:
+  #     - mongo
+  #   environment:
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USER}
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
+  #     ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ROOT_USER}:${MONGO_ROOT_PASSWORD}@mongo:27017/
+  adminer:
+    image: adminer
+    container_name: 'docker-eco_adminer'
+    restart: '${RESTART_CONTAINERS}'
+    links:
+      - postgres
+    ports:
+      - '${ADMINER_PORT}:8080'
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: 'docker-eco_mailhog'
+    networks:
+      - default
+    ports:
+      - '${MAILHOG_PORT}:8025'
+
+networks:
+  default:
+    driver: bridge
