@@ -18,7 +18,7 @@ services:
     volumes:
       - ${POSTGRES_DB_FOLDER}:/var/lib/postgresql/data/pgdata:rw
     ports:
-      - '${POSTGRES_PORT}:8080'
+      - '${POSTGRES_PORT}:5432'
     # задаем пароль для root пользователя
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
