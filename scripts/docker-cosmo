@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+#cosmovisa_nginx cosmovisa_app_dev cosmovisa_pdf_render_app cosmovisa_adminer cosmovisa_postgres cosmovisa_nuxt_lk_app cosmovisa_empty_app_dev encryption_app encryption_nginx
+
+#(cosmovisa|encryption)_*
+
+if [[ $1 = "start" || $1 = "stop" || $1 = "restart" ]]; then
+  docker "$1" $(docker ps -aq --filter 'name=(cosmovisa|encryption)_*')
+else
+  echo "Bad first argument"
+fi
