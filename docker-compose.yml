@@ -58,6 +58,7 @@ services:
   mailhog:
     image: mailhog/mailhog:latest
     container_name: 'docker-eco_mailhog'
+    restart: '${RESTART_CONTAINERS}'
     networks:
       - default
     ports:
