@@ -4,8 +4,30 @@
 
 #(cosmovisa|encryption)_*
 
+# cosmovisa_nginx
+# cosmovisa_strapi_app
+# cosmovisa_app_dev
+# cosmovisa_pdf_render_app
+# cosmovisa_adminer
+# cosmovisa_postgres
+# cosmovisa_nuxt_lk_app
+# cosmovisa_empty_app_dev
+# encryption_app
+# encryption_nginx
+
+
 if [[ $1 = "start" || $1 = "stop" || $1 = "restart" ]]; then
-  docker "$1" $(docker ps -aq --filter 'name=(cosmovisa|encryption)_*')
+  if [[ $1 = "start" ]]; then
+    echo "Start first services"
+
+    docker start $(docker ps -aq --filter 'name=(cosmovisa|encryption)_(strapi.*|app.*|pdf.*|adminer.*|postgres|nuxt.*|empty.*)')
+
+    echo "Start later services"
+
+    docker start $(docker ps -aq --filter 'name=cosmovisa_nginx' --filter 'name=encryption_nginx')
+  else
+    docker "$1" $(docker ps -aq --filter 'name=(cosmovisa|encryption)_*')
+  fi
 else
   echo "Bad first argument"
 fi
