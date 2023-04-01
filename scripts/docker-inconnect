@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+
+# inconnect_nuxt_lk
+# inconnect_nginx
+
+
+if [[ $1 = "start" || $1 = "stop" || $1 = "restart" ]]; then
+  if [[ $1 = "start" ]]; then
+    echo "Start first services"
+
+    docker start $(docker ps -aq --filter 'name=inconnect_nuxt_lk')
+
+    echo "Start later services"
+
+    docker start $(docker ps -aq --filter 'name=inconnect_nginx')
+  else
+    docker "$1" $(docker ps -aq --filter 'name=inconnect_*')
+  fi
+else
+  echo "Bad first argument"
+fi

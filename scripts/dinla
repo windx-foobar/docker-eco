@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+docker exec -it inconnect_nuxt_lk bash
