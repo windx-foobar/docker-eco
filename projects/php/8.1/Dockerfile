@@ -14,13 +14,13 @@ RUN apk update && apk add --no-cache --no-interactive \
         freetype-dev \
         libjpeg-turbo-dev \
         libmcrypt-dev \
-        libpng-dev zlib-dev icu-dev imagemagick-dev libxml2-dev libzip-dev  \
+        libpng-dev zlib-dev icu-dev imagemagick-dev libxml2-dev libzip-dev libpq-dev  \
         net-tools \
     && apk add --no-cache --virtual .build-deps \
     g++ make autoconf \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl \
-    && docker-php-ext-install zip xml gd pdo_mysql \
+    && docker-php-ext-install zip xml gd pdo_mysql pdo_pgsql \
     && pecl install mcrypt \
     && docker-php-ext-enable mcrypt \
     && pecl install imagick \
