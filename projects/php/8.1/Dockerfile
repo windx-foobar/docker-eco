@@ -20,7 +20,7 @@ RUN apk update && apk add --no-cache --no-interactive \
     g++ make autoconf \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl \
-    && docker-php-ext-install zip xml gd pdo_mysql pdo_pgsql \
+    && docker-php-ext-install zip xml gd pdo_mysql pdo_pgsql bcmath \
     && pecl install mcrypt \
     && docker-php-ext-enable mcrypt \
     && pecl install imagick \
