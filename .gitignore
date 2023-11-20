@@ -1,0 +1,7 @@
+*
+!projects
+!scripts
+!.env.example
+!.gitignore
+!docker-compose
+!docker-compose.yml
