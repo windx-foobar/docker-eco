@@ -16,6 +16,8 @@ RUN apk update && apk add --no-cache --no-interactive \
         libmcrypt-dev \
         libpng-dev zlib-dev icu-dev imagemagick-dev libxml2-dev libzip-dev libpq-dev  \
         net-tools \
+        nodejs \
+        npm \
     && apk add --no-cache --virtual .build-deps \
     g++ make autoconf \
     && docker-php-ext-configure intl \
