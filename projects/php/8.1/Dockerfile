@@ -29,7 +29,8 @@ RUN apk update && apk add --no-cache --no-interactive \
     && docker-php-ext-enable imagick \
     && pecl install xdebug-3.1.5 \
     && docker-php-ext-enable xdebug \
-    && apk del --purge .build-deps
+    && apk del --purge .build-deps \
+    && npm i --global yarn
 
 ADD ./php.ini /usr/local/etc/php/99-php.ini
 
