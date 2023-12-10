@@ -16,8 +16,6 @@ RUN apk update && apk add --no-cache --no-interactive \
         libmcrypt-dev \
         libpng-dev zlib-dev icu-dev imagemagick-dev libxml2-dev libzip-dev libpq-dev  \
         net-tools \
-        nodejs \
-        npm \
     && apk add --no-cache --virtual .build-deps \
     g++ make autoconf \
     && docker-php-ext-configure intl \
@@ -29,14 +27,15 @@ RUN apk update && apk add --no-cache --no-interactive \
     && docker-php-ext-enable imagick \
     && pecl install xdebug-3.1.5 \
     && docker-php-ext-enable xdebug \
-    && apk del --purge .build-deps \
-    && npm i --global yarn
+    && apk del --purge .build-deps
 
 ADD ./php.ini /usr/local/etc/php/99-php.ini
 
 RUN wget https://getcomposer.org/installer -O - -q \
     | php -- --install-dir=/bin --filename=composer --quiet
 
+# ADD NODE.JS, NPM, COREPACK
+RUN apk add --no-cache --no-interactive nodejs npm && npm i --global corepack
 
 RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
 RUN chown -R www-data:www-data /var/www
