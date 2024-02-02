@@ -40,7 +40,10 @@ RUN apk add --no-cache --no-interactive \
     && rm -f /tmp/pear/imagick*.tgz \
     && rm -f /tmp/pear/xdebug*.tgz
 
-ADD ./php.ini /usr/local/etc/php/99-php.ini
+ADD ./php.ini /usr/local/etc/php/conf.d/99-php.ini
+
+# Обновим SSL сертификаты для wget
+RUN wget https://curl.se/ca/cacert.pem -O /etc/ssl/certs/cacert.pem --no-check-certificate
 
 RUN wget https://getcomposer.org/installer -O - -q \
     | php -- --install-dir=/bin --filename=composer --quiet
