@@ -1,7 +1,21 @@
-*
-!projects
-!scripts
-!.env.example
+# *
+# !projects
+# !scripts
+# !.env.example
+# !.gitignore
+# !docker-compose
+# !docker-compose.yml
+
+
+/*
+
 !.gitignore
+!.env.example
 !docker-compose
 !docker-compose.yml
+
+!projects/
+!projects/*
+!scripts/
+!scripts/*
+
