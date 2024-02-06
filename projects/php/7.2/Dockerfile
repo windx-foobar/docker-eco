@@ -14,14 +14,14 @@ RUN apk update && apk add --no-cache --no-interactive \
         freetype-dev \
         libjpeg-turbo-dev \
         libmcrypt-dev \
-        libpng-dev zlib-dev icu-dev imagemagick-dev libxml2-dev libzip-dev postgresql-dev  \
+        libpng-dev zlib-dev icu-dev imagemagick libxml2-dev libzip-dev postgresql-dev  \
         net-tools \
         build-base \
     && apk add --no-cache --virtual .build-deps \
     g++ make autoconf \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl \
-    && docker-php-ext-install zip xml gd pdo_mysql pdo_pgsql bcmath \
+    && docker-php-ext-install zip xml gd pdo_mysql pdo_pgsql mysqli bcmath \
     && apk del --purge .build-deps
 
 # Собираем модули для php сами, т.к. pecl неактуальный...
