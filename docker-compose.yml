@@ -44,8 +44,6 @@ services:
     ports:
       - '${NGINX_PORT}:80'
     # монтируем директории, слева директории на основной машине, справа - куда они монтируются в контейнере
-    depends_on:
-      - php-fpm
     volumes:
       - '${NGINX_VOLUME_FOLDER}/config:/etc/nginx/conf.d'
       - '${NGINX_VOLUME_FOLDER}/logs:/var/log/nginx'
