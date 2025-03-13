@@ -104,6 +104,14 @@ services:
       - mariadb
     ports:
       - '${ADMINER_PORT}:8080'
+    environment:
+      - "ADMINER_SERVERS=${ADMINER_SERVERS}"
+      - "ADMINER_PERMANENT_LOGIN=${ADMINER_PERMANENT_LOGIN}"
+      - "ADMINER_APP_NAME=${ADMINER_APP_NAME}"
+    volumes:
+      - "./projects/adminer/login-servers.php:/var/www/html/plugins-enabled/login-servers.php"
+      - "./projects/adminer/login-servers.tpl:/var/www/html/plugins-enabled/login-servers/template.tpl"
+      - "./projects/adminer/index.php:/var/www/html/index.php"
   mailhog:
     image: mailhog/mailhog:latest
     container_name: 'docker-eco_mailhog'
