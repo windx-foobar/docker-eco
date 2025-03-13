@@ -1,78 +1,78 @@
 # Список наших сервисов (контейнеров)
 services:
   php-fpm:
-    container_name: 'docker-eco_php-fpm'
+    container_name: "docker-eco_php-fpm"
     build:
       context: ./projects/php/8.1
       args:
         USER_ID: 1000
         GROUP_ID: 1000
-        TZ: '${TZ}'
-    restart: 'no'
+        TZ: "${TZ}"
+    restart: "no"
     environment:
       XDEBUG_CONFIG: "remote_host=192.168.220.1 remote_enable=1 remote_autostart=off  remote_port=9008"
       PHP_IDE_CONFIG: "serverName=php"
-      TZ: '${TZ}'
+      TZ: "${TZ}"
     volumes:
-      - '${PHP_PROJECTS_FOLDER}:/var/www:rw'
+      - "${PHP_PROJECTS_FOLDER}:/var/www:rw"
     networks:
       - default
   php-fpm729:
-    container_name: 'docker_eco_php-fpm729'
+    container_name: "docker_eco_php-fpm729"
     build:
       context: ./projects/php/7.2
       args:
         USER_ID: 1000
         GROUP_ID: 1000
-        TZ: '${TZ}'
-    restart: 'no'
+        TZ: "${TZ}"
+    restart: "no"
     environment:
       XDEBUG_CONFIG: "remote_host=192.168.220.1 remote_enable=1 remote_autostart=off  remote_port=9008"
       PHP_IDE_CONFIG: "serverName=php"
-      TZ: '${TZ}'
+      TZ: "${TZ}"
     volumes:
-      - '${PHP_PROJECTS_FOLDER}:/var/www:rw'
+      - "${PHP_PROJECTS_FOLDER}:/var/www:rw"
     networks:
       - default
   nginx:
     # используем последний стабильный образ nginx
     build: ./projects/nginx
-    container_name: 'docker-eco_nginx'
-    restart: 'no'
+    container_name: "docker-eco_nginx"
+    restart: "no"
     ports:
-      - '${NGINX_PORT}:80'
+      - "${NGINX_PORT}:80"
     # монтируем директории, слева директории на основной машине, справа - куда они монтируются в контейнере
     volumes:
-      - '${NGINX_VOLUME_FOLDER}/config:/etc/nginx/conf.d'
-      - '${NGINX_VOLUME_FOLDER}/logs:/var/log/nginx'
-      - '${PHP_PROJECTS_FOLDER}:/var/www:rw'
+      - "${NGINX_VOLUME_FOLDER}/config:/etc/nginx/conf.d"
+      - "${NGINX_VOLUME_FOLDER}/logs:/var/log/nginx"
+      - "${PHP_PROJECTS_FOLDER}:/var/www:rw"
     networks:
       - default
   mariadb:
     build: ./projects/mariadb
-    container_name: 'docker-eco_mariadb'
-    restart: '${RESTART_CONTAINERS}'
+    container_name: "docker-eco_mariadb"
+    restart: "${RESTART_CONTAINERS}"
     volumes:
       - ${MARIADB_FOLDER}:/var/lib/mysql:rw
     environment:
-      MARIADB_ROOT_PASSWORD: '${MARIADB_ROOT_PASSWORD}'
-      MYSQL_ROOT_PASSWORD: '${MARIADB_ROOT_PASSWORD}'
+      MARIADB_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
     networks:
       - default
   postgres:
     image: postgres:13.3
-    container_name: 'docker-eco_postgres'
-    restart: '${RESTART_CONTAINERS}'
+    container_name: "docker-eco_postgres"
+    restart: "${RESTART_CONTAINERS}"
     volumes:
       - ${POSTGRES_DB_FOLDER}:/var/lib/postgresql/data/pgdata:rw
     ports:
-      - '${POSTGRES_PORT}:5432'
+      - "${POSTGRES_PORT}:5432"
     # задаем пароль для root пользователя
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_USER: '${POSTGRES_ROOT_USER}'
-      POSTGRES_PASSWORD: '${POSTGRES_ROOT_PASSWORD}'
-      POSTGRES_DB: '${POSTGRES_DB}'
+      POSTGRES_USER: "${POSTGRES_ROOT_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_ROOT_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
   # mongo:
   #   image: mongo:5.0.2
   #   container_name: 'docker-eco_mongo'
@@ -97,13 +97,13 @@ services:
   #     ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ROOT_USER}:${MONGO_ROOT_PASSWORD}@mongo:27017/
   adminer:
     image: adminer
-    container_name: 'docker-eco_adminer'
-    restart: '${RESTART_CONTAINERS}'
+    container_name: "docker-eco_adminer"
+    restart: "${RESTART_CONTAINERS}"
     links:
       - postgres
       - mariadb
     ports:
-      - '${ADMINER_PORT}:8080'
+      - "${ADMINER_PORT}:8080"
     environment:
       - "ADMINER_SERVERS=${ADMINER_SERVERS}"
       - "ADMINER_PERMANENT_LOGIN=${ADMINER_PERMANENT_LOGIN}"
@@ -114,25 +114,25 @@ services:
       - "./projects/adminer/index.php:/var/www/html/index.php"
   mailhog:
     image: mailhog/mailhog:latest
-    container_name: 'docker-eco_mailhog'
-    restart: '${RESTART_CONTAINERS}'
+    container_name: "docker-eco_mailhog"
+    restart: "${RESTART_CONTAINERS}"
     networks:
       - default
     ports:
-      - '${MAILHOG_PORT}:8025'
-      - '${MAILHOG_SMTP_PORT}:1025'
+      - "${MAILHOG_PORT}:8025"
+      - "${MAILHOG_SMTP_PORT}:1025"
   redis:
     build: ./projects/redis
-    container_name: 'docker-eco_redis'
-    restart: '${RESTART_CONTAINERS}'
+    container_name: "docker-eco_redis"
+    restart: "${RESTART_CONTAINERS}"
     ports:
-      - '${REDIS_PORT}:6379'
+      - "${REDIS_PORT}:6379"
     volumes:
-      - '${REDIS_FOLDER}:/root/redis'
+      - "${REDIS_FOLDER}:/root/redis"
     environment:
-      - 'REDIS_PASSWORD=${REDIS_PASSWORD}'
-      - 'REDIS_PORT=6379'
-      - 'REDIS_DATABASES=16'
+      - "REDIS_PASSWORD=${REDIS_PASSWORD}"
+      - "REDIS_PORT=6379"
+      - "REDIS_DATABASES=16"
 
 networks:
   default:
