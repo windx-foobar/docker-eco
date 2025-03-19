@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+docker exec -it cosmovisa_bank_detector_api bash
