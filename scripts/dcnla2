@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+docker exec -it cosmovisa_nuxt_v2_lk_app bash
